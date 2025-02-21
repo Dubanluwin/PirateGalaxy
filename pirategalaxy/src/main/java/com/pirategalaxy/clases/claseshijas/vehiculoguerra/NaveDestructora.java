@@ -1,4 +1,4 @@
-package com.pirategalaxy.clases.hijas.vehiculoguerra;
+package com.pirategalaxy.clases.claseshijas.vehiculoguerra;
 
 import java.util.List;
 
@@ -7,8 +7,9 @@ import com.pirategalaxy.clases.VehiculoGuerra;
 
 public class NaveDestructora extends VehiculoGuerra {
 
-    public NaveDestructora(int puntosVida, int ataque, int defensa, String nombre, List<Guerrero> listaGuerreros) {
-        super(puntosVida, ataque, defensa, nombre, listaGuerreros);
+    public NaveDestructora(int puntosVida, int ataque, int defensa, String nombre, String tipo,
+            List<Guerrero> listaGuerreros) {
+        super(puntosVida, ataque, defensa, nombre, tipo, listaGuerreros);
     }
 
     @Override
@@ -28,4 +29,8 @@ public class NaveDestructora extends VehiculoGuerra {
         return "NaveDestructora []";
     }
 
+    @Override
+    public void embarcar(Guerrero guerreros) {
+        super.embarcar(guerreros);
+    }
 }

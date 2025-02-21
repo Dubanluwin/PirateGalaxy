@@ -1,5 +1,6 @@
 package com.pirategalaxy.clases;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pirategalaxy.interfaz.Tripulable;
@@ -10,50 +11,60 @@ public abstract class VehiculoGuerra implements Tripulable {
     private int ataque = 5;
     private int defensa = 5;
     private String nombre;
-    private List<Guerrero> listaGuerreros;
+    private String tipo;
+    private List<Guerrero> listaGuerreros = new ArrayList<>();
 
-    public VehiculoGuerra(int puntosVida, int ataque, int defensa, String nombre, List<Guerrero> listaGuerreros) {
+    public VehiculoGuerra(int puntosVida, int ataque, int defensa, String nombre, String tipo,
+            List<Guerrero> listaGuerreros) {
+
+        controlarAtaqueDefensa(ataque, defensa);
         this.puntosVida = puntosVida;
-        this.ataque = ataque;
-        this.defensa = defensa;
         this.nombre = nombre;
+        this.tipo = tipo;
         this.listaGuerreros = listaGuerreros;
     }
 
-    @Override
-    public String toString() {
-        return "VehiculoGuerra [puntosVida=" + puntosVida + ", ataque=" + ataque + ", defensa=" + defensa + ", nombre="
-                + nombre + ", listaGuerreros=" + listaGuerreros + "]";
-    }
-
-    // (ataque + defensa <= 10 ) - Método para crear la excepción de que la suma y
-    // el ataque no sea mayor de 10.
-
-    public int condicionDeAtaqueDefensa(int ataque, int defensa) {
-
-        int estadisticaGuerra = ataque + defensa;
-        int ataqueDefensa;
-        if (estadisticaGuerra <= 10) {
-
-            System.out.println("El ataque y la defensa son válidos para este combate.");
-
-        } else {
-            System.out.println(
-                    "El ataqué y la defensa no son válidos para este combate. Reestableciendo a los valores por defecto por tramposo");
-            ataque = 5;
-            defensa = 5;
-                    return ;
-        }
-
-    }
-
     // Método embarcar (Guerrero), maximo 10 guerreros.
+
+    private void controlarAtaqueDefensa(int ataque, int defensa) {
+        // (ataque + defensa <= 10 ) - Método para crear la excepción de que la suma y
+        // el ataque no sea mayor de 10.
+
+        if (ataque + defensa > 10 || ataque < 0 || defensa < 0) {
+            System.out.println("Los valores de ataque y defensa no son válidos para este combate.");
+
+            this.ataque = 5;
+            this.defensa = 5;
+            System.out.println("\n Reestableciendo valores por defecto..." +
+                    "\n Defensa = " + this.defensa +
+                    "\n Ataque = " + this.ataque);
+        } else {
+            this.ataque = ataque;
+            this.defensa = defensa;
+        }
+    }
+
+    public void embarcar(Guerrero guerreros) {
+        if (listaGuerreros.size() > 10) {
+            System.out.println("No se pueden embarcar más de 10 guerreros");
+            return;
+        } else {
+            listaGuerreros.add(guerreros);
+            System.out.println("Los guerreros se han embarcado...");
+        }
+    }
 
     // Ataque: ataque VehiculoGuerra*(random 0-1) + SUM (fuerza de todos los
     // guerreros) * (random 0-0.5)
 
     // Defensa: defensa VehiculoGuerra*(random 0-1) + SUM (Resistencia de todos los
     // guerreros) * (random 0-0.5)
+
+    @Override
+    public String toString() {
+        return "VehiculoGuerra [puntosVida=" + puntosVida + ", ataque=" + ataque + ", defensa=" + defensa + ", nombre="
+                + nombre + ", tipo=" + tipo + ", listaGuerreros=" + listaGuerreros + "]";
+    }
 
     public int getPuntosVida() {
         return puntosVida;
@@ -93,6 +104,26 @@ public abstract class VehiculoGuerra implements Tripulable {
 
     public void setListaGuerreros(List<Guerrero> listaGuerreros) {
         this.listaGuerreros = listaGuerreros;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    @Override
+    public int atacar() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int defender(int danho) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }

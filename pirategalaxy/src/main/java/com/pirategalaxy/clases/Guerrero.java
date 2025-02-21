@@ -1,8 +1,6 @@
 package com.pirategalaxy.clases;
 
-import com.pirategalaxy.interfaz.Tripulable;
-
-public abstract class Guerrero implements Tripulable {
+public abstract class Guerrero {
 
     private String nombre;
     private String tipo;
@@ -10,10 +8,39 @@ public abstract class Guerrero implements Tripulable {
     private int resistencia;
 
     public Guerrero(String nombre, String tipo, int fuerza, int resistencia) {
+
+        controlarFuerzaResistencia(fuerza, resistencia);
         this.nombre = nombre;
         this.tipo = tipo;
-        this.fuerza = fuerza;
-        this.resistencia = resistencia;
+    }
+
+    // (fuerza + resistencia <= 10) ---- Condición
+    private void controlarFuerzaResistencia(int fuerza, int resistencia) {
+        if (fuerza + resistencia > 10 || fuerza < 0 || resistencia < 0) {
+            System.out.println("Los valores de ataque y defensa no son válidos para este combate.");
+
+            this.fuerza = 5;
+            this.resistencia = 5;
+            System.out.println("\n Reestableciendo valores por defecto..." +
+                    "\n Resistencia = " + this.resistencia +
+                    "\n fuerza = " + this.fuerza);
+        } else {
+            this.fuerza = fuerza;
+            this.resistencia = resistencia;
+        }
+    }
+
+    // Cada guerrero aporta puntos extra de ataque al vehículo.
+
+    public int apoyoAtaque() {
+
+        return fuerza;
+    }
+
+    // Cada guerrero aporta puntos extra de defensa al vehículo.
+    public int apoyoDefensa() {
+
+        return resistencia;
     }
 
     @Override
@@ -21,8 +48,6 @@ public abstract class Guerrero implements Tripulable {
         return "Guerrero [nombre=" + nombre + ", tipo=" + tipo + ", fuerza=" + fuerza + ", resistencia=" + resistencia
                 + "]";
     }
-
-    // (fuerza + resistencia <= 10 ) Controlar la excepción
 
     public String getNombre() {
         return nombre;
@@ -56,6 +81,5 @@ public abstract class Guerrero implements Tripulable {
         this.resistencia = resistencia;
     }
 
-    // (fuerza + resistencia <= 10) ---- Condición
 
 }

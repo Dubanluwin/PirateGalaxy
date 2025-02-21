@@ -4,6 +4,6 @@ public interface Tripulable {
 
     int atacar();
 
-    int defender(int puntosDefensa);
+    int defender(int danho);
 
 }
