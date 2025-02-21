@@ -1,4 +1,4 @@
-package com.pirategalaxy.clases;
+package com.pirategalaxy.clases.clasespadres;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,12 @@ import com.pirategalaxy.interfaz.Tripulable;
 
 public abstract class VehiculoGuerra implements Tripulable {
 
-    private int puntosVida = 1000;
-    private int ataque = 5;
-    private int defensa = 5;
-    private String nombre;
-    private String tipo;
-    private List<Guerrero> listaGuerreros = new ArrayList<>();
+    protected int puntosVida = 1000;
+    protected int ataque = 5;
+    protected int defensa = 5;
+    protected String nombre;
+    protected String tipo;
+    protected List<Guerrero> listaGuerreros = new ArrayList<>();
 
     public VehiculoGuerra(int puntosVida, int ataque, int defensa, String nombre, String tipo,
             List<Guerrero> listaGuerreros) {

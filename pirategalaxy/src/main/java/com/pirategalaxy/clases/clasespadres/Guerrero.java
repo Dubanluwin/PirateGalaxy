@@ -1,11 +1,11 @@
-package com.pirategalaxy.clases;
+package com.pirategalaxy.clases.clasespadres;
 
 public abstract class Guerrero {
 
-    private String nombre;
-    private String tipo;
-    private int fuerza;
-    private int resistencia;
+    protected String nombre;
+    protected String tipo;
+    protected int fuerza;
+    protected int resistencia;
 
     public Guerrero(String nombre, String tipo, int fuerza, int resistencia) {
 
