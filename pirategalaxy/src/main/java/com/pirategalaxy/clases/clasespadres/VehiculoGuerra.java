@@ -126,4 +126,12 @@ public abstract class VehiculoGuerra implements Tripulable {
         return 0;
     }
 
+    // VIKTOR: añadimos el alcance.
+    @Override
+    public int alcance() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    
 }

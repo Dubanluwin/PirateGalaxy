@@ -42,6 +42,13 @@ public class NaveDepredadora extends VehiculoGuerra {
         return danioRecibido;
     }
 
+    // VIKTOR: añadimos el alcance con su fórmula.
+    @Override
+    public int alcance() {
+        // TODO Auto-generated method stub
+        return (int) (Math.random() * 100);
+    }
+
     @Override
     public String toString() {
         return "NaveDestructora []";

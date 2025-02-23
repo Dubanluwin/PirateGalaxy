@@ -6,4 +6,6 @@ public interface Tripulable {
 
     int defender(int danho);
 
+    // VIKTOR: Creamos el alcance como interfaz
+    int alcance();
 }
