@@ -48,7 +48,7 @@ public class ConfiguracionBatalla {
         List<Guerrero> listaDepredadores = new CopyOnWriteArrayList<>();
         System.out.println("Creando la tripulación de Depredadores...");
         for (int i = 0; i < numGuerreros; i++) {
-            Depredador depredador = new Depredador("Depredador" + i, "Depredador", 9 - i, 1 + i);
+            Depredador depredador = new Depredador("Depredador " + i, "Depredador", 9 - i, 1 + i);
             listaDepredadores.add(depredador);
         }
 
