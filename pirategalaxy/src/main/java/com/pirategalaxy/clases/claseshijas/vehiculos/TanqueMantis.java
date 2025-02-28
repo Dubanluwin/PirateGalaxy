@@ -5,9 +5,9 @@ import java.util.List;
 import com.pirategalaxy.clases.clasespadres.Guerrero;
 import com.pirategalaxy.clases.clasespadres.VehiculoGuerra;
 
-public class Tanque extends VehiculoGuerra {
+public class TanqueMantis extends VehiculoGuerra {
 
-    public Tanque(int puntosVida, int ataque, int defensa, String nombre, String tipo, List<Guerrero> listaGuerreros) {
+    public TanqueMantis(int puntosVida, int ataque, int defensa, String nombre, String tipo, List<Guerrero> listaGuerreros) {
         super(puntosVida, ataque, defensa, nombre, tipo, listaGuerreros);
     }
 
