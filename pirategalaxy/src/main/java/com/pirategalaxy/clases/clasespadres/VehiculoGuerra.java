@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.pirategalaxy.clases.claseshijas.guerreros.Depredador;
 import com.pirategalaxy.clases.claseshijas.guerreros.Mantis;
+import com.pirategalaxy.excepciones.TooManyAtaqueDefensa;
 import com.pirategalaxy.excepciones.TooManyGuerreros;
 import com.pirategalaxy.interfaz.Tripulable;
 import com.pirategalaxy.clases.claseshijas.vehiculos.NaveDepredadora;
@@ -24,7 +25,7 @@ public abstract class VehiculoGuerra implements Tripulable {
     protected Map<Class<?>, List<Guerrero>> mapaVehiculoGuerra = new HashMap<>();
 
     public VehiculoGuerra(int puntosVida, int ataque, int defensa, String nombre, String tipo,
-            List<Guerrero> listaGuerreros, Map<Class<?>, List<Guerrero>> mapaVehiculoGuerra) {
+            List<Guerrero> listaGuerreros, Map<Class<?>, List<Guerrero>> mapaVehiculoGuerra) throws TooManyAtaqueDefensa {
 
         controlarAtaqueDefensa(ataque, defensa);
         this.puntosVida = puntosVida;
@@ -34,20 +35,20 @@ public abstract class VehiculoGuerra implements Tripulable {
         this.mapaVehiculoGuerra = mapaVehiculoGuerra;
     }
 
-    // Método embarcar (Guerrero), maximo 10 guerreros.
-
-    private void controlarAtaqueDefensa(int ataque, int defensa) {
+    protected void controlarAtaqueDefensa(int ataque, int defensa) throws TooManyAtaqueDefensa {
         // (ataque + defensa <= 10 ) - Método para crear la excepción de que la suma y
         // el ataque no sea mayor de 10.
 
         if (ataque + defensa > 10 || ataque < 0 || defensa < 0) {
-            System.out.println("Los valores de ataque y defensa no son válidos para este combate.");
-
             this.ataque = 5;
             this.defensa = 5;
             System.out.println("\n Reestableciendo valores por defecto..." +
                     "\n Defensa = " + this.defensa +
                     "\n Ataque = " + this.ataque);
+
+            // Lanzamos la excepción después de restablecer los valores por defecto
+            throw new TooManyAtaqueDefensa("Los valores de ataque y defensa no son válidos para este combate.");
+            
         } else {
             this.ataque = ataque;
             this.defensa = defensa;
