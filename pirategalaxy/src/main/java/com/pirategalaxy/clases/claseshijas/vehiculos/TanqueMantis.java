@@ -7,47 +7,75 @@ import com.pirategalaxy.clases.clasespadres.VehiculoGuerra;
 
 public class TanqueMantis extends VehiculoGuerra {
 
-    public TanqueMantis(int puntosVida, int ataque, int defensa, String nombre, String tipo, List<Guerrero> listaGuerreros) {
+    public TanqueMantis(int puntosVida, int ataque, int defensa, String nombre, String tipo,
+            List<Guerrero> listaGuerreros) {
         super(puntosVida, ataque, defensa, nombre, tipo, listaGuerreros);
     }
 
     @Override
     public int atacar() {
-
-        // SE PUEDE MODIFICAR EL METODO (( HE UTILIZADO EL MISMO DE LA NAVE
-        // DESTRUCTORA))
-
-        // atacar(): devuelve un valor calculado con la fórmula del diagrama (p. ej.
-        // ataque base + suma del ataque de los guerreros).
-
-        int danhoTotal = ataque;
-        for (Guerrero guerrero : listaGuerreros) {
-            danhoTotal += guerrero.apoyoAtaque(); // Los guerreros suman al ataque
+        if (puntosVida <= 500) {
+            ataque += 10;
         }
-        System.out.println(this.nombre + " realiza un ataque con daño total: " + danhoTotal);
-        return danhoTotal;
-
+        int ataqueTotal = (int) (ataque * Math.random());
+        for (Guerrero guerrero : listaGuerreros) {
+            ataqueTotal += guerrero.getFuerza() * Math.random() * 0.5;
+        }
+        return ataqueTotal;
     }
 
     @Override
-    public int defender(int danho) {
-
-        // SE PUEDE MODIFICAR EL METODO (( HE UTILIZADO EL MISMO DE LA NAVE
-        // DESTRUCTORA))
-
-        // defender(): devuelve un valor calculado con la fórmula del diagrama (p. ej.
-        // defensa base + suma de la defensa de los guerreros). Con el valor devuelto
-        // por el método defender se quitarán los puntos de vida de la nave.
-
-        int defensaTotal = defensa;
+    public int defender(int ataqueRecibido) {
+        int defensaTotal = (int) (defensa * Math.random());
         for (Guerrero guerrero : listaGuerreros) {
-            defensaTotal += guerrero.apoyoDefensa(); // Los guerreros suman a la defensa
+            defensaTotal += guerrero.getResistencia() * Math.random() * 0.5;
         }
-        int danhoRecibido = Math.max(0, danho - defensaTotal); // Si el daño es menor que la defensa, no se recibe daño
-        puntosVida -= danhoRecibido;
-        System.out.println(this.nombre + " recibe " + danhoRecibido + " de daño, vida restante: " + puntosVida);
-        return danhoRecibido;
+        int daño = ataqueRecibido - defensaTotal;
+        puntosVida -= Math.max(daño, 0);
+        return Math.max(daño, 0);
     }
+
+    // @Override
+    // public int atacar() {
+
+    // // SE PUEDE MODIFICAR EL METODO (( HE UTILIZADO EL MISMO DE LA NAVE
+    // // DESTRUCTORA))
+
+    // // atacar(): devuelve un valor calculado con la fórmula del diagrama (p. ej.
+    // // ataque base + suma del ataque de los guerreros).
+
+    // int danhoTotal = ataque;
+    // for (Guerrero guerrero : listaGuerreros) {
+    // danhoTotal += guerrero.apoyoAtaque(); // Los guerreros suman al ataque
+    // }
+    // System.out.println(this.nombre + " realiza un ataque con daño total: " +
+    // danhoTotal);
+    // return danhoTotal;
+
+    // }
+
+    // @Override
+    // public int defender(int danho) {
+
+    // // SE PUEDE MODIFICAR EL METODO (( HE UTILIZADO EL MISMO DE LA NAVE
+    // // DESTRUCTORA))
+
+    // // defender(): devuelve un valor calculado con la fórmula del diagrama (p.
+    // ej.
+    // // defensa base + suma de la defensa de los guerreros). Con el valor devuelto
+    // // por el método defender se quitarán los puntos de vida de la nave.
+
+    // int defensaTotal = defensa;
+    // for (Guerrero guerrero : listaGuerreros) {
+    // defensaTotal += guerrero.apoyoDefensa(); // Los guerreros suman a la defensa
+    // }
+    // int danhoRecibido = Math.max(0, danho - defensaTotal); // Si el daño es menor
+    // que la defensa, no se recibe daño
+    // puntosVida -= danhoRecibido;
+    // System.out.println(this.nombre + " recibe " + danhoRecibido + " de daño, vida
+    // restante: " + puntosVida);
+    // return danhoRecibido;
+    // }
 
     // VIKTOR: añadimos el alcance con su fórmula.
     @Override
