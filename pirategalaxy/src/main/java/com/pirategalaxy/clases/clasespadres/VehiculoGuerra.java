@@ -1,9 +1,16 @@
 package com.pirategalaxy.clases.clasespadres;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.pirategalaxy.clases.claseshijas.guerreros.Depredador;
+import com.pirategalaxy.clases.claseshijas.guerreros.Mantis;
+import com.pirategalaxy.excepciones.TooManyGuerreros;
 import com.pirategalaxy.interfaz.Tripulable;
+import com.pirategalaxy.clases.claseshijas.vehiculos.NaveDepredadora;
+import com.pirategalaxy.clases.claseshijas.vehiculos.TanqueMantis;
 
 public abstract class VehiculoGuerra implements Tripulable {
 
@@ -13,15 +20,17 @@ public abstract class VehiculoGuerra implements Tripulable {
     protected String nombre;
     protected String tipo;
     protected List<Guerrero> listaGuerreros = new ArrayList<>();
+    protected Map<String, List<Guerrero>> mapaVehiculoGuerra = new HashMap<>();
 
     public VehiculoGuerra(int puntosVida, int ataque, int defensa, String nombre, String tipo,
-            List<Guerrero> listaGuerreros) {
+            List<Guerrero> listaGuerreros, Map<String, List<Guerrero>> mapaVehiculoGuerra) {
 
         controlarAtaqueDefensa(ataque, defensa);
         this.puntosVida = puntosVida;
         this.nombre = nombre;
         this.tipo = tipo;
         this.listaGuerreros = listaGuerreros;
+        this.mapaVehiculoGuerra = mapaVehiculoGuerra;
     }
 
     // Método embarcar (Guerrero), maximo 10 guerreros.
@@ -44,8 +53,7 @@ public abstract class VehiculoGuerra implements Tripulable {
         }
     }
 
-    // Crear un mapa, donde 1 clave sera la nave depredadora con su lista de
-    // depredadores, 1 clave sera el tanquis con su lista de guerreros.
+    // Crear un mapa, donde 1 clave sera la nave depredadora con su lista de depredadores, 1 clave sera el tanquis con su lista de guerreros.
     public void embarcar(Guerrero guerreros) {
         if (listaGuerreros.size() > 10) {
             System.out.println("No se pueden embarcar más de 10 guerreros");
@@ -55,6 +63,44 @@ public abstract class VehiculoGuerra implements Tripulable {
             System.out.println("Los guerreros se han embarcado...");
         }
     }
+
+    // ============================== CAMBIOS VIKTOR ============================== //
+    public void crearVehiculoGuerra() {
+        mapaVehiculoGuerra.put(Tanque, listaGuerreros);
+        mapaVehiculoGuerra.put(NaveDepredadora, listaGuerreros);
+    }
+
+    public void embarcarGuerrero(String tipoNave, Guerrero guerrero) throws TooManyGuerreros {
+        List<Guerrero> listaGuerreros = mapaVehiculoGuerra.get(tipoNave);
+        int maxGuerreros = 10;
+
+        if (listaGuerreros == null) {
+            throw new IllegalArgumentException("El tipo de nave no es válido");
+        }
+
+        if (tipoNave.equalsIgnoreCase("Tanque") && !(guerrero instanceof Mantis)) {
+            throw new IllegalArgumentException("Solo los guerreros de tipo Mantis pueden embarcar en un Tanque");
+        }
+
+        if (tipoNave.equalsIgnoreCase("NaveDepredadora") && !(guerrero instanceof Depredador)) {
+            throw new IllegalArgumentException("Solo los guerreros de tipo Depredador pueden embarcar en un Nave Depredadora");
+        }
+
+        if (listaGuerreros.size() == maxGuerreros) {
+            throw new TooManyGuerreros("No se pueden embarcar más de " + maxGuerreros + " guerreros en la nave " + tipoNave);
+        }
+
+        listaGuerreros.add(guerrero);
+        System.out.println("Guerrero embarcado en " + tipoNave);
+    }
+
+    public void mostrarGuerreros() {
+        for (String tipoNave : mapaVehiculoGuerra.keySet()) {
+            List<Guerrero> listaGuerreros = mapaVehiculoGuerra.get(tipoNave);
+            System.out.println("Vehículo: " + tipoNave + " - Guerreros: " + listaGuerreros.size());
+        }
+    }
+    // ============================================================================== //
 
     // Ataque: ataque VehiculoGuerra*(random 0-1) + SUM (fuerza de todos los
     // guerreros) * (random 0-0.5)

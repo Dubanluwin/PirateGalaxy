@@ -1,6 +1,7 @@
 package com.pirategalaxy.clases.claseshijas.vehiculos;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pirategalaxy.clases.clasespadres.Guerrero;
 import com.pirategalaxy.clases.clasespadres.VehiculoGuerra;
@@ -8,8 +9,8 @@ import com.pirategalaxy.clases.clasespadres.VehiculoGuerra;
 public class NaveDepredadora extends VehiculoGuerra {
 
     public NaveDepredadora(int puntosVida, int ataque, int defensa, String nombre, String tipo,
-            List<Guerrero> listaGuerreros) {
-        super(puntosVida, ataque, defensa, nombre, tipo, listaGuerreros);
+            List<Guerrero> listaGuerreros, Map<String, List<Guerrero>> mapaVehiculoGuerra) {
+        super(puntosVida, ataque, defensa, nombre, tipo, listaGuerreros, mapaVehiculoGuerra);
     }
 
     @Override
@@ -27,13 +28,13 @@ public class NaveDepredadora extends VehiculoGuerra {
 
     @Override
     public int defender(int ataqueRecibido) {
-    int defensaTotal = (int) (defensa * Math.random());
-    for (Guerrero guerrero : listaGuerreros) {
-    defensaTotal += guerrero.getResistencia() * Math.random() * 0.5;
-    }
-    int daño = ataqueRecibido - defensaTotal;
-    puntosVida -= Math.max(daño, 0);
-    return Math.max(daño, 0);
+        int defensaTotal = (int) (defensa * Math.random());
+        for (Guerrero guerrero : listaGuerreros) {
+        defensaTotal += guerrero.getResistencia() * Math.random() * 0.5;
+        }
+        int daño = ataqueRecibido - defensaTotal;
+        puntosVida -= Math.max(daño, 0);
+        return Math.max(daño, 0);
     }
 
 
@@ -83,12 +84,11 @@ public class NaveDepredadora extends VehiculoGuerra {
     }
 
     @Override
-    public void embarcar(Guerrero guerreros) {
-        super.embarcar(guerreros);
-
-        if (guerreros.getTipo().equalsIgnoreCase("Depredador")) {
-
+    public void embarcar(Guerrero guerrero) {
+        if (!guerrero.getTipo().equalsIgnoreCase("Depredador")) {
+            throw new IllegalArgumentException("Solo los guerreros de tipo Depredador pueden embarcar en la NaveDepredadora.");
         }
+        super.embarcar(guerrero);
     }
 
 }
