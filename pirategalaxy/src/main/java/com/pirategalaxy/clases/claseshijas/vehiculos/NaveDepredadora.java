@@ -9,7 +9,7 @@ import com.pirategalaxy.clases.clasespadres.VehiculoGuerra;
 public class NaveDepredadora extends VehiculoGuerra {
 
     public NaveDepredadora(int puntosVida, int ataque, int defensa, String nombre, String tipo,
-            List<Guerrero> listaGuerreros, Map<String, List<Guerrero>> mapaVehiculoGuerra) {
+            List<Guerrero> listaGuerreros, Map<Class<?>, List<Guerrero>> mapaVehiculoGuerra) {
         super(puntosVida, ataque, defensa, nombre, tipo, listaGuerreros, mapaVehiculoGuerra);
     }
 
@@ -40,7 +40,6 @@ public class NaveDepredadora extends VehiculoGuerra {
 
     // @Override
     // public int atacar() {
-    // // TODO Auto-generated method stub
     // // atacar(): similar a Tanque, pero con su propia lógica de ataque (p. ej.
     // // ataque base + bonificación de guerreros).
 
@@ -74,7 +73,6 @@ public class NaveDepredadora extends VehiculoGuerra {
     // VIKTOR: añadimos el alcance con su fórmula.
     @Override
     public int alcance() {
-        // TODO Auto-generated method stub
         return (int) (Math.random() * 100);
     }
 

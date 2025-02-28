@@ -20,10 +20,11 @@ public abstract class VehiculoGuerra implements Tripulable {
     protected String nombre;
     protected String tipo;
     protected List<Guerrero> listaGuerreros = new ArrayList<>();
-    protected Map<String, List<Guerrero>> mapaVehiculoGuerra = new HashMap<>();
+    // protected Map<String, List<Guerrero>> mapaVehiculoGuerra = new HashMap<>();
+    protected Map<Class<?>, List<Guerrero>> mapaVehiculoGuerra = new HashMap<>();
 
     public VehiculoGuerra(int puntosVida, int ataque, int defensa, String nombre, String tipo,
-            List<Guerrero> listaGuerreros, Map<String, List<Guerrero>> mapaVehiculoGuerra) {
+            List<Guerrero> listaGuerreros, Map<Class<?>, List<Guerrero>> mapaVehiculoGuerra) {
 
         controlarAtaqueDefensa(ataque, defensa);
         this.puntosVida = puntosVida;
@@ -65,39 +66,44 @@ public abstract class VehiculoGuerra implements Tripulable {
     }
 
     // ============================== CAMBIOS VIKTOR ============================== //
+    // public void crearVehiculoGuerra() {
+    //     mapaVehiculoGuerra.put("TanqueMantis", listaGuerreros);
+    //     mapaVehiculoGuerra.put("NaveDepredadora", listaGuerreros);
+    // }
+
     public void crearVehiculoGuerra() {
-        mapaVehiculoGuerra.put(Tanque, listaGuerreros);
-        mapaVehiculoGuerra.put(NaveDepredadora, listaGuerreros);
+        mapaVehiculoGuerra.put(TanqueMantis.class, new ArrayList<Guerrero>());
+        mapaVehiculoGuerra.put(NaveDepredadora.class, new ArrayList<Guerrero>());
     }
 
-    public void embarcarGuerrero(String tipoNave, Guerrero guerrero) throws TooManyGuerreros {
-        List<Guerrero> listaGuerreros = mapaVehiculoGuerra.get(tipoNave);
+    public void embarcarGuerrero(VehiculoGuerra tipo, Guerrero guerrero) throws TooManyGuerreros {
+        List<Guerrero> listaGuerreros = mapaVehiculoGuerra.get(tipo.getClass());
         int maxGuerreros = 10;
 
         if (listaGuerreros == null) {
             throw new IllegalArgumentException("El tipo de nave no es válido");
         }
 
-        if (tipoNave.equalsIgnoreCase("Tanque") && !(guerrero instanceof Mantis)) {
+        if (tipo instanceof TanqueMantis && !(guerrero instanceof Mantis)) {
             throw new IllegalArgumentException("Solo los guerreros de tipo Mantis pueden embarcar en un Tanque");
         }
 
-        if (tipoNave.equalsIgnoreCase("NaveDepredadora") && !(guerrero instanceof Depredador)) {
+        if (tipo instanceof NaveDepredadora && !(guerrero instanceof Depredador)) {
             throw new IllegalArgumentException("Solo los guerreros de tipo Depredador pueden embarcar en un Nave Depredadora");
         }
 
         if (listaGuerreros.size() == maxGuerreros) {
-            throw new TooManyGuerreros("No se pueden embarcar más de " + maxGuerreros + " guerreros en la nave " + tipoNave);
+            throw new TooManyGuerreros("No se pueden embarcar más de " + maxGuerreros + " guerreros en la nave " + tipo);
         }
 
         listaGuerreros.add(guerrero);
-        System.out.println("Guerrero embarcado en " + tipoNave);
+        System.out.println("Guerrero embarcado en " + tipo);
     }
 
     public void mostrarGuerreros() {
-        for (String tipoNave : mapaVehiculoGuerra.keySet()) {
-            List<Guerrero> listaGuerreros = mapaVehiculoGuerra.get(tipoNave);
-            System.out.println("Vehículo: " + tipoNave + " - Guerreros: " + listaGuerreros.size());
+        for (Class<?> tipo : mapaVehiculoGuerra.keySet()) {
+            List<Guerrero> listaGuerreros = mapaVehiculoGuerra.get(tipo);
+            System.out.println("Vehículo: " + tipo + " - Guerreros: " + listaGuerreros.size());
         }
     }
     // ============================================================================== //
