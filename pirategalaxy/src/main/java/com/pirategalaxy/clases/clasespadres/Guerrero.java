@@ -7,9 +7,15 @@ public abstract class Guerrero {
     protected int fuerza;
     protected int resistencia;
 
+    // Añadir excepción  La suma de la fuerza y la resistencia de un guerrero no
+    // puede ser mayor de 10
+    
     public Guerrero(String nombre, String tipo, int fuerza, int resistencia) {
         this.nombre = nombre;
         this.tipo = tipo;
+
+
+
     }
 
     // Cada guerrero aporta puntos extra de ataque al vehículo.

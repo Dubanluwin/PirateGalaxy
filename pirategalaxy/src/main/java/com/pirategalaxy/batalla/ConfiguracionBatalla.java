@@ -41,6 +41,8 @@ public class ConfiguracionBatalla {
 
     }
 
+    
+
     public static List<Guerrero> crearDepredadores(int numGuerreros) {
 
         List<Guerrero> listaDepredadores = new CopyOnWriteArrayList<>();
@@ -55,7 +57,7 @@ public class ConfiguracionBatalla {
     }
 
 
-    
+
 
 
 
