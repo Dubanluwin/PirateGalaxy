@@ -6,10 +6,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import com.pirategalaxy.clases.claseshijas.guerreros.Depredador;
 import com.pirategalaxy.clases.claseshijas.guerreros.Mantis;
 import com.pirategalaxy.clases.clasespadres.Guerrero;
+import com.pirategalaxy.excepciones.TooManyFuerzaResistencia;
 
 public class ConfiguracionBatalla {
 
-    public static List<Guerrero> crearMantis(int numGuerreros) {
+    public static List<Guerrero> crearMantis(int numGuerreros) throws TooManyFuerzaResistencia {
 
         List<Guerrero> listaMantis = new CopyOnWriteArrayList<>();
 
@@ -41,9 +42,7 @@ public class ConfiguracionBatalla {
 
     }
 
-    
-
-    public static List<Guerrero> crearDepredadores(int numGuerreros) {
+    public static List<Guerrero> crearDepredadores(int numGuerreros) throws TooManyFuerzaResistencia {
 
         List<Guerrero> listaDepredadores = new CopyOnWriteArrayList<>();
         System.out.println("Creando la tripulación de Depredadores...");
@@ -55,11 +54,5 @@ public class ConfiguracionBatalla {
         return listaDepredadores;
 
     }
-
-
-
-
-
-
 
 }
